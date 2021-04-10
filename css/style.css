@@ -1,0 +1,44 @@
+body {
+    background-color: rgb(254, 255, 255);
+}
+.mylink {
+    text-decoration: none;
+}
+.banner {
+    min-height: 400px;
+    position: relative;
+    background-color: #e0f3ba;
+}
+.banner-content-1 {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.banner-content-2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -10%);
+}
+.campaign-card {
+    min-height: 380px;
+    border: solid none #cfcdcd;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-image: url("/images/card-bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: normal;
+}
+.sub-card {
+    height: 160px;
+}
+.row-padding {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.card {
+    border-radius: 0px;
+    border: none !important;
+    padding: 0px !important;
+}
