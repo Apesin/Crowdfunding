@@ -31,7 +31,10 @@ body {
     background-blend-mode: normal;
 }
 .sub-card {
-    height: 160px;
+    height: 220px;
+}
+.sub-card-desc {
+    height: 100px;
 }
 .row-padding {
     padding-left: 0px;
