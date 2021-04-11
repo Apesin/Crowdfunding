@@ -22,16 +22,13 @@ body {
     transform: translate(-50%, -10%);
 }
 .campaign-card {
-    min-height: 380px;
+    min-height: 525px;
     border: solid none #cfcdcd;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    background-image: url("/images/card-bg.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-blend-mode: normal;
+    padding: 0px;
 }
 .sub-card {
-    height: 220px;
+    height: 100px;
 }
 .sub-card-desc {
     height: 100px;
@@ -52,4 +49,16 @@ body {
     margin-right: 35%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
+}
+.img-container {
+    min-height: 270px;
+    background-color: rgb(28, 160, 160);
+    padding: 0px;
+    margin: 0px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: normal;
+}
+.progress-info {
+    font-size: 11px;
 }
