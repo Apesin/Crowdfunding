@@ -18,46 +18,11 @@
             <nav class="navbar sticky-top navbar-light bg-light">
                 <span class="navbar-brand mb-0 h1">GetFunded</span>
                 <span class="d-flex">
-                    <a href="#newCampaign" class="mx-4 link-secondary mylink" data-bs-toggle="modal">Create New Campaign</a>
+                    <a href="campaign.html" class="mx-4 link-secondary mylink">Create New Campaign</a>
+                    <!--<a href="campaign.html" class="mx-4 link-secondary mylink" data-bs-toggle="modal">Create New Campaign</a>-->
                     <a href="#" class="link-secondary mylink">Campaigns</a>
                 </span>
             </nav>
-        </div>
-
-        <!-- Vertically centered scrollable modal for creating a new campaign -->
-        <div class="modal " id="newCampaign" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">CREATE NEW CAMPAIGN</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <!-- New campaign form -->
-                    <form>
-                        <div class="mb-3">
-                            <label for="campaign-title" class="form-label">Campaign Title</label>
-                            <input type="text" class="form-control" id="campaign-title" placeholder="Enter Campaign Title">
-                        </div>
-                        <div class="mb-3">
-                            <label for="campaign-desc" class="form-label">Campaign Description</label>
-                            <textarea class="form-control" id="campaign-desc" rows="6"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="campaign-goal" class="form-label">Campaign Goal</label>
-                            <input type="number" class="form-control" id="campaign-goal" placeholder="Enter Campaign Amount">
-                        </div>
-                        <div class="mb-3">
-                            <label for="campaign-duration" class="form-label">Campaign Duration</label>
-                            <input type="number" class="form-control" id="campaign-duration" placeholder="Enter Campaign Duration">
-                        </div>
-                    </form>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-success">Create Campaign</button>
-                  </div>
-                </div>
-              </div>
         </div>
 
         <!-- Create a banner showcasing the purpose of this web app -->
@@ -115,20 +80,10 @@
         </div>
         <br>
 
-        <!-- About getfunded -->
-        <div class="row">
-            <div class="card mx-auto">
-                <div class="card-body banner">
-                    
-                </div>
-            </div>
-        </div>
-        <br>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-    <script src="js/script.js"></script>
+    
 </body>
 
 </html>
