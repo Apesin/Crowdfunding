@@ -62,3 +62,31 @@ body {
 .progress-info {
     font-size: 11px;
 }
+.campaign-detail {
+    height: auto;
+    overflow: hidden;
+}
+#unique-banner {
+    height: 500px;
+    padding: 0px;
+    margin: 0px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: normal;
+    background-color: blueviolet;
+}
+.card-info {
+    min-height: 150px;
+    border: solid none #cfcdcd;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 0px;
+}
+#expected-goal {
+    background-color: rgb(43, 205, 226);
+}
+#amount-donated {
+    background-color: rgb(226, 43, 195);
+}
+#number-of-contributors {
+    background-color: rgb(186, 226, 43);
+}
