@@ -1,0 +1,30 @@
+<div class="col-2 p-3">
+                        <div class="card">
+                            <div class="card-body campaign-card">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2 p-3">
+                        <div class="card">
+                            <div class="card-body campaign-card">
+                                
+                            </div>
+                        </div>
+                    </div>
+...............................................................................................................
+ <div class="card-body campaign-card">
+                                <div class="sub-card">
+                                    <h5 class="card-title text-center">Free Healthcare</h5>
+                                </div>
+                                <div class="sub-card">
+                                    <p class="card-text lh-1 fs-6">
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                                        when an unknown printer took a galley of type and scrambled it to make a type 
+                                        specimen book.
+                                    </p>
+                                </div>
+                                <br>
+                                <button class="btn btn-success" type="button">More Info</button>
+                            </div>
