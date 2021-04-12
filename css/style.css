@@ -90,3 +90,63 @@ body {
 #number-of-contributors {
     background-color: rgb(186, 226, 43);
 }
+/* The sidebar menu */
+.sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 200px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 20; /* Stay at the top */
+    left: 0;
+    background-color: #4e4e4d; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+  }
+  
+  /* The navigation menu links */
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #fff;
+    display: block;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover {
+    color: #77fad3;
+  }
+  /* Style page content */
+.main {
+    margin-left: 160px; /* Same as the width of the sidebar */
+    padding: 0px 10px;
+    height: auto;
+    position: relative;
+  }
+  #sub-main {
+      position: absolute;
+      width: 100%;
+      height: auto;
+      top: 0;
+      left: 0;
+      display: block;
+      overflow: hidden;
+      margin-left: 0.7%;
+      margin-right: 0.5%;
+      padding-left: 2%;
+      padding-right: 2%;
+  }
+  #sub-main-second {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: 0;
+    left: 0;
+    display: none;
+    overflow: hidden;
+    margin-left: 0.7%;
+    margin-right: 0.5%;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
