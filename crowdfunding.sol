@@ -21,14 +21,32 @@ contract CrowdFund {
     address payable public owner; //owner of contract
     uint256 totalCampaigns;//no. of campaigns
 
+    event Transfer(
+        address indexed _from,
+        address indexed _to,
+        uint256 _value
+    );
+
+    event Approval(
+        address indexed _owner,
+        address indexed _spender,
+        uint256 _value
+    );
+
+    mapping(address => uint256) public balances;
+    mapping(address => mapping(address => uint256)) public allowed;
     
     // This is a type for a single Campaign.
     struct Campaign {
         address payable campaignOwner; 
         string campaignTitle; 
         string campaignDescription;
+        string campaignImage; // I added the image here
+        string campaignOwnerEmail;// emails of the campaign owner to contact him/her on the progress
+        string thankYouMessage; //thanks message to show contributors
         uint256 goalAmount; //in wei
         uint256 totalAmountFunded;//in wei
+        uint256 contributorsCount;
         uint256 deadline;
         bool goalAchieved;
         bool isCampaignOpen;
@@ -58,7 +76,7 @@ contract CrowdFund {
 
     
     //Creation of a campaign
-    function createCampaign(string memory _campaignTitle, string memory _campaignDescription, uint256 _goalAmount, uint256 _fundingPeriodInDays ) public {
+    function createCampaign(string memory _campaignTitle, string memory _campaignDescription, uint256 _goalAmount, uint256 _fundingPeriodInDays, string memory _campaignImage, string memory _campaignOwnerEmail, string memory _thankYouMessage) public {
 
         require(bytes(_campaignTitle).length !=0 && bytes(_campaignDescription).length !=0, 'Campaign Title and description cannot be empty!');
         require(_goalAmount > 0, 'Goal amount must be more than zero ethers!');
@@ -66,9 +84,23 @@ contract CrowdFund {
 
         ++ totalCampaigns;//id of first campaign is 1 and not 0.
 
-        Campaign memory aCampaign = Campaign(msg.sender,_campaignTitle,_campaignDescription,_goalAmount,0,now + (_fundingPeriodInDays * 1 days),false,true,true);
+        Campaign memory aCampaign = Campaign(msg.sender,_campaignTitle,_campaignDescription,_campaignImage,_campaignOwnerEmail,_thankYouMessage,_goalAmount,0,0,now + (_fundingPeriodInDays * 1 days),false,true,true);
         campaigns[totalCampaigns] = aCampaign;
 
+    }
+
+    function transfer(address _to, uint256 _value) public returns (bool success){
+        require(balances[msg.sender] >= _value);
+        balances[msg.sender] = balances[msg.sender] - _value;
+        balances[_to] = balances[_to] + _value;
+        emit Transfer(msg.sender, _to, _value);
+        return true;
+    }
+
+    function approve(address _spender, uint256 _value) public returns (bool succees){
+        allowed[msg.sender][_spender] = _value;
+        emit Approval(msg.sender, _spender, _value);
+        return true;
     }
 
 
@@ -81,9 +113,9 @@ contract CrowdFund {
 
         checkCampaignDeadline(_campaignID);
 
-        campaigns[_campaignID].contributions[msg.sender] = (campaigns[_campaignID].contributions[msg.sender]) + msg.value;
+        campaigns[_campaignID].contributions[msg.sender] = msg.value;
         campaigns[_campaignID].totalAmountFunded = campaigns[_campaignID].totalAmountFunded + msg.value;
-
+        campaigns[_campaignID].contributorsCount = ++campaigns[_campaignID].contributorsCount;
           //check if funding goal achieved
           if(campaigns[_campaignID].totalAmountFunded >= campaigns[_campaignID].goalAmount){
                     campaigns[_campaignID].goalAchieved = true; 
@@ -93,18 +125,32 @@ contract CrowdFund {
 
 
     // Withdrawl of funds by Campaign Owner
-    function withdrawFunds(uint256 _campaignID) public onlyCampaignOwner(_campaignID){
+    function withdrawFunds(uint256 _campaignID, address _cont) public onlyCampaignOwner(_campaignID){
                 require(campaigns[_campaignID].isExists,'Campaign does not exists');
                 require(campaigns[_campaignID].goalAchieved, 'Cant withdraw. Goal amount not reached');
+                Campaign memory _campaign = campaigns[_campaignID];
+                //uint256 amount = _campaign.goalAmount;
+                allowed[_cont][owner] = _campaign.goalAmount;
 
-                msg.sender.transfer(campaigns[_campaignID].totalAmountFunded);
+                emit Approval(_cont, owner, _campaign.goalAmount);
 
+                transferFrom(owner, _campaign.campaignOwner, _campaign.goalAmount);
+
+                //msg.sender.transfer(campaigns[_campaignID].totalAmountFunded);
                 campaigns[_campaignID].isCampaignOpen = false; //Close the campaign
     }
 
+    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success){
+        //require(_value <= balances[_from]);
+        //require(_value <= allowed[_from][msg.sender]);
+        balances[_from] -= _value;
+        balances[_to] += _value;
+        allowed[_from][msg.sender] = _value;
+        emit Transfer(_from,_to, _value);
+    }
 
     //Reclaim of funds by a contributor
-    function claimRefund(uint256 _campaignID) public {
+    function claimRefund(uint256 _campaignID, address _cont) public {
             require(campaigns[_campaignID].isExists,'Campaign does not exists');
             require(campaigns[_campaignID].contributions[msg.sender] > 0, 'No contributions');
 
@@ -112,8 +158,13 @@ contract CrowdFund {
             checkCampaignDeadline(_campaignID);
 
             require(!(campaigns[_campaignID].isCampaignOpen) && !(campaigns[_campaignID].goalAchieved),'Reclaim conditions not met' );
+            
+            //msg.sender.transfer(campaigns[_campaignID].contributions[msg.sender]);
+            allowed[_cont][owner] = campaigns[_campaignID].contributions[msg.sender];
 
-            msg.sender.transfer(campaigns[_campaignID].contributions[msg.sender]);
+                emit Approval(_cont, owner, campaigns[_campaignID].contributions[msg.sender]);
+
+                transferFrom(owner, msg.sender, campaigns[_campaignID].contributions[msg.sender]);
             campaigns[_campaignID].contributions[msg.sender] = 0;
 
     }
@@ -138,9 +189,15 @@ contract CrowdFund {
     uint campaignID,
     string memory name,
     string memory description,
+    string memory image,
     uint256 goal,
     uint256 totalAmountFunded,
-    uint256 deadline
+    uint256 deadline,
+    address cOwner,
+    uint256 contributors,
+    string memory thankYouMessage,
+    bool isCampaignOpen
+
 
     ) {
         require(campaigns[_campaignID].isExists,'Campaign does not exists');
@@ -148,9 +205,14 @@ contract CrowdFund {
    campaignID = _campaignID;
    name = _campaign.campaignTitle;
    description = _campaign.campaignDescription;
+   image = _campaign.campaignImage;
    goal = _campaign.goalAmount;
    totalAmountFunded = _campaign.totalAmountFunded;
    deadline = _campaign.deadline;
+   cOwner = _campaign.campaignOwner;
+   contributors = _campaign.contributorsCount;
+   thankYouMessage = _campaign.thankYouMessage;
+   isCampaignOpen = _campaign.isCampaignOpen;
     }
 
 
