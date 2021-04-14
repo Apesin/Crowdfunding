@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.header {
+    font-family: sans-serif;
+    text-align: center;
+}
+</style>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title id ="header">
+    </title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <script src='https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js'></script>
+</head>
+
+<body>
+
+    <h2>Binance Group 6 Crowdfunding</h2>
+    <br >
+    <h2 id="info"></h2><br>
+    <button onclick="createCampaign();">Create Campaign</button>
+    <button onclick="getCont();">Get Campaigns</button><br><br>
+    <button onclick="fundCampaign();">Fund me</button><br>
+    <button onclick="getCampaignDetails();">Get Campaign Details</button>
+    <button onclick="getTotalCampaigns();">Get Total Campaigns</button>
+    <br>
+    Campaign Name: <input id="name"></textbox><br>
+    Campaign description: <input id="description"></textbox><br>
+    Campaign goal: <input type="number" id="goal"><br>
+    Deadline: <input type="text" id="deadline">
+    <br /><br />
+    ......................................................................
+    <h1>Fund Campaign</h1>
+    <input type="number" id="fund">
+    Status: <span id="status">Loading...</span>
+
+    <script type="text/javascript">
+     var a = document.getElementById("info");
+
+        async function loadWeb3() {
+            if (window.ethereum) {
+                window.web3 = new Web3(window.ethereum);
+                window.ethereum.enable();
+            }
+        }
+
+        async function loadContract() {
+            // set ABI
+            var abi = [{"constant":false,"inputs":[{"name":"_campaignID","type":"uint256"}],"name":"withdrawFunds","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getTotalCampaigns","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_campaignID","type":"uint256"}],"name":"claimRefund","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_campaignID","type":"uint256"}],"name":"fundCampaign","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_campaignTitle","type":"string"},{"name":"_campaignDescription","type":"string"},{"name":"_goalAmount","type":"uint256"},{"name":"_fundingPeriodInDays","type":"uint256"}],"name":"createCampaign","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_campaignID","type":"uint256"}],"name":"closeCampaign","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_campaignID","type":"uint256"}],"name":"getContributions","outputs":[{"name":"contribution","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_campaignID","type":"uint256"}],"name":"getCampaignDetails","outputs":[{"name":"campaignID","type":"uint256"},{"name":"name","type":"string"},{"name":"description","type":"string"},{"name":"goal","type":"uint256"},{"name":"totalAmountFunded","type":"uint256"},{"name":"deadline","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}];
+
+            //set contract address
+            var contractAddress =  '0x0d33fA05f13f40DD8062E7d88af294801eCcfc43'; //'0xaeF0eb667d07884802b7b2C38bbd21E771dDA0AA';
+
+            return await new window.web3.eth.Contract(abi,contractAddress);
+        }
+
+        async function getContributions() {
+            updateStatus('fetching all Campaigns.');
+            //const tweetsNumber = await window.contract.methods.getTotalTweet().call();
+            
+            for (i = 1;i < 10;i++){
+                var result = await window.contract.methods.getContributions(i).call();
+                if (result == 3963877391197344453575983046348115674221700746820753546331534351508065746944) {
+                    a.innerHTML = a.innerHTML+"<h5>CampaignID "+i +"does not exist</h5>";
+                }else{
+                    a.innerHTML = a.innerHTML+"<h5>" + "CampaingID: "+i + "Amount Contributed: "+result[0];
+                }
+                updateStatus('Done');
+            }
+           
+        }
+
+
+        async function getTotalCampaigns(){
+            var result = await window.contract.methods.getTotalCampaigns().call();
+            a.innerHTML = a.innerHTML+"<h5> Total Campaigns: "+result;
+            updateStatus('gotten');
+        }
+
+        async function getCont(){
+            var i = 1;
+            var result = await window.contract.methods.getContributions(i).call();
+                if (result == 3963877391197344453575983046348115674221700746820753546331534351508065746944) {
+                    a.innerHTML = a.innerHTML+"<h5>CampaignID "+i +"does not exist</h5>";
+                }else{
+                    a.innerHTML = a.innerHTML+"<h5>" + "CampaingID: "+i + "Amount Contributed: "+result;
+                }
+                updateStatus('Done');
+        }
+
+        async function formatDate(unixtimestamp){
+                var theDate = new Date(unixtimestamp * 1000);
+                    dateString = theDate.toGMTString();
+                    //return dateString;
+                    alert(dateString );
+        }
+
+        async function getCurrentAccount() {
+            const accounts = await window.web3.eth.getAccounts();
+            return accounts[0];
+        }
+
+        async function getCampaignDetails(){
+            var i = document.getElementById("fund").value;
+            var result = await window.contract.methods.getCampaignDetails(i).call();
+                    a.innerHTML = a.innerHTML+"<h5>" + "CampaingID: "+i + "Amount Contributed: "+result[0] + result[1] + result[2] + result[3] + result[4] + result[5];
+                    formatDate(result[5]);
+                updateStatus('Done');
+        }
+
+        async function createCampaign() {
+            updateStatus(`Createting campaign ...`);
+            const account = await getCurrentAccount();
+            const coolNumber = await window.contract.methods.createCampaign(document.getElementById("name").value,document.getElementById("description").value,document.getElementById("goal").value,document.getElementById("deadline").value).send({ from: account });
+            updateStatus('Created.');
+        }
+
+        async function fundCampaign(){
+            updateStatus(`Funding campaign ...`);
+            const account = await getCurrentAccount();
+            const coolNumber = await window.contract.methods.fundCampaign(document.getElementById("fund").value).send({ from: account, gas: 3000000, value: 100 });
+            updateStatus('Created.');
+        }
+
+        async function load() {
+            await loadWeb3();
+            window.contract = await loadContract();
+            getTotalCampaigns();
+            updateStatus('Ready!');
+        }
+
+        function updateStatus(status) {
+            const statusEl = document.getElementById('status');
+            statusEl.innerHTML = status;
+            console.log(status);
+        }
+
+        load();
+    </script>
+</body>
+
+</html>

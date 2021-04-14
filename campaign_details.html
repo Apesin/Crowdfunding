@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Campaign Details| GetFunded </title>
+    
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <!-- As a heading -->
+            <div class="row">
+                <nav class="navbar sticky-top navbar-light bg-light">
+                    <span class="navbar-brand mb-0 h1">GetFunded</span><span id="info" hidden=""></span><span id="on-going-campaigns-count"></span><span id="response"></span>
+                    <span class="d-flex">
+                        <a href="campaign.html" class="mx-4 link-secondary mylink">Create New Campaign</a>
+                        <!--<a href="campaign.html" class="mx-4 link-secondary mylink" data-bs-toggle="modal">Create New Campaign</a>-->
+                        <a href="view_all_campaigns.html" class="link-secondary mylink">Campaigns</a>
+                    </span>
+                </nav>
+            </div>
+            <!--Page details -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                  <span id="campaign-details"></span>
+                            <center id="loader"><img src="images/loader.gif"></center>
+
+
+
+                            <!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Funding this campaign</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <!-- Fund campaign form -->
+         <span id="status"></span>
+            <form id="campaign_funding_form" method="post" enctype="multipart/form">
+                <div class="mb-3">
+                    <label for="campaign-fund-amount" class="form-label">Amount you want to contriubute</label>
+                    <input type="number" class="form-control" id="campaign-fund-amount" placeholder="Amount in wei. 1 ether = 1,000,000,000,000,000,000 wei">
+                </div>
+                <div class="mb-3">
+                    <label for="campaign-desc" class="form-label">Enter a valid email address to reach you (Optional)</label>
+                    <input type="email" class="form-control" id="campaign-fund-email" placeholder="Please enter a mail to reach you, you can choose to stay anonymous">
+                </div>
+            </form>
+
+            <!--Submit the form-->
+            <br>
+            <div class="d-grid my-2">
+                <button type="button" class="btn btn-success" onclick="fundCampaign();" id="fundme">Fund Campaign</button>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-primary">Fund</button>-->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+                           <!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="closemycampaign" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Close this campaign</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <!-- Fund campaign form -->
+         <span id="closeStatus"></span>
+         <div id="closeWarning">
+             <h5 style="color: red">Closing this Campaign will result to loss of the contributions in this campaign while contributors can file for refund</h4>
+         <span id="closeStatus"></span>
+            <h2>Are you sure you want to close this Campaign</h2>
+         </div>
+
+            <!--Submit the form-->
+            <br>
+            
+      </div>
+      <div class="modal-footer" id="closeButtons">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" onclick="closeCampaign();">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="withdrawfunds" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Withdraw Funds</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <!-- Fund campaign form -->
+         <span id="withdrawStatus"></span>
+         <div id="withdrawWarning">
+             <h5 style="color: red">After successful withdrawal, the campaign will be closed and we will charge you for the transactions and use of the platform, be rest assured that this will not affect your goal</h4>
+         <span id="withdrawStatus"></span>
+            <h2>Are you sure you want to withdraw ?</h2>
+         </div>
+
+            <!--Submit the form-->
+            <br>
+            
+      </div>
+      <div class="modal-footer" id="withdrawButtons">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" onclick="withdrawFunds();">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src='https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js'></script>
+        <script type="text/javascript" src="js/campaign_details.js">
+
+        </script>
+    </body>
+</html>
