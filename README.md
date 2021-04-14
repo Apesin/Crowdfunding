@@ -8,4 +8,4 @@
 <a href="https://binance6.000webhostapp.com">You can check it out here</a>
 <br>
 <br>
-  <a href="https://apesin.github.io/Crowdfunding/">For the static page</a>
+  <a href="https://apesin.github.io/Crowdfunding/">Check here for the static page</a>
