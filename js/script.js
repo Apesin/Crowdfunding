@@ -15,4 +15,5 @@ function hideShowDivSecond() {
         y.style.display = "none";
         a.style.display = "block";
     }
+    getConcludedCampaigns();
 }
