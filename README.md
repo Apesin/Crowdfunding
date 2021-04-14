@@ -6,4 +6,6 @@
   <li>Timmak (Business Plan Writer)</li>
 </ul>
 <a href="https://binance6.000webhostapp.com">You can check it out here</a>
-  <a href="">For the static page</a>
+<br>
+<br>
+  <a href="https://apesin.github.io/Crowdfunding/">For the static page</a>
