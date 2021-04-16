@@ -26,3 +26,9 @@
   <p>In a situation whereby a campaign goal is not achieved and the campaign ownwer closes the camapign, the camapign owner wont be able to withdrawa funds from the campaign except his/her own personally contributed amount to the campaign if any, then claim refund button will be available to contributors to claim their funded amounts.</p>
   # Below are images of the Dapp
   <img src="https://github.com/Apesin/Crowdfunding/blob/main/screens/Screenshot%202021-04-16%20at%202.09.17%20PM.png">
+<img src="https://github.com/Apesin/Crowdfunding/blob/main/screens/Screenshot%202021-04-16%20at%202.11.15%20PM.png">
+<img src="https://github.com/Apesin/Crowdfunding/blob/main/screens/Screenshot%202021-04-16%20at%202.11.24%20PM.png" >
+<img src="https://github.com/Apesin/Crowdfunding/blob/main/screens/Screenshot%202021-04-16%20at%202.11.49%20PM.png" >
+<img src="https://github.com/Apesin/Crowdfunding/blob/main/screens/Screenshot%202021-04-16%20at%202.12.33%20PM.png" >
+<img src="https://github.com/Apesin/Crowdfunding/blob/main/screens/Screenshot%202021-04-16%20at%202.12.48%20PM.png" >
+<img src="https://github.com/Apesin/Crowdfunding/blob/main/screens/Screenshot%202021-04-16%20at%202.12.58%20PM.png" >
