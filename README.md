@@ -9,7 +9,9 @@
 <br>
 <br>
   <a href="https://apesin.github.io/Crowdfunding/">Check here for the static page</a>
+  <p>
 ...........................................................................................................
+  </p>
 #  HOW IT WORKS
 <p>
   This project allows users to create a campaign of their choice by entering the following details
@@ -23,4 +25,4 @@
   <b>After successful fulfilment of the campaign i.e the goal has been achieved, the owner of the campaign can then withdraw funds from the campaign and it becomes        closed</b>
   <p>In a situation whereby a campaign goal is not achieved and the campaign ownwer closes the camapign, the camapign owner wont be able to withdrawa funds from the campaign except his/her own personally contributed amount to the campaign if any, then claim refund button will be available to contributors to claim their funded amounts.</p>
   # Below are images of the Dapp
-  <img src="https://github.com/Apesin/Cam-Hackers/blob/image.1">
+  <img src="https://github.com/Apesin/Cam-Hackers/blob/Screenshot 2021-04-16 at 2.09.17 PM.png">
