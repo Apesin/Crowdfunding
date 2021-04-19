@@ -1,4 +1,4 @@
-# Crowdfunding
+# Crowdfunding | GETFUNDED
 <h1>A project created by Group 6 members of Binance Smart Chain Master Class 2021</h1>
 <ul>
   <li>Niniola Adesina (Smart chain developer)</li>
