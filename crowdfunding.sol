@@ -38,18 +38,18 @@ contract CrowdFund {
     
     // This is a type for a single Campaign.
     struct Campaign {
-        address payable campaignOwner; 
-        string campaignTitle; 
-        string campaignDescription;
+        address payable campaignOwner; //wallet address of the campaign owner
+        string campaignTitle; //title of the campaign
+        string campaignDescription; //campaign description
         string campaignImage; // I added the image here
         string campaignOwnerEmail;// emails of the campaign owner to contact him/her on the progress
-        string thankYouMessage; //thanks message to show contributors
+        string thankYouMessage; //thanks message to show contributors after contributing to a campaign
         uint256 goalAmount; //in wei
         uint256 totalAmountFunded;//in wei
-        uint256 contributorsCount;
-        uint256 deadline;
-        bool goalAchieved;
-        bool isCampaignOpen;
+        uint256 contributorsCount; //records the number of contributors for the campaign
+        uint256 deadline; //capmaign deadline in days
+        bool goalAchieved; //bool to record the status of a campaign goal whether is has been achieved or not
+        bool isCampaignOpen; //bool to record if a campaign is opened or closed
         bool isExists; //campaign exists or not. Campaign once created always exists even if closed
 
         mapping(address => uint256) contributions;//stores amount donated by each unique contributor
@@ -89,6 +89,7 @@ contract CrowdFund {
 
     }
 
+    //initiates transfer function
     function transfer(address _to, uint256 _value) public returns (bool success){
         require(balances[msg.sender] >= _value);
         balances[msg.sender] = balances[msg.sender] - _value;
@@ -97,6 +98,7 @@ contract CrowdFund {
         return true;
     }
 
+     //gives approval to the web3 wallet to transfer funds on behalf of the contract
     function approve(address _spender, uint256 _value) public returns (bool succees){
         allowed[msg.sender][_spender] = _value;
         emit Approval(msg.sender, _spender, _value);
@@ -139,7 +141,7 @@ contract CrowdFund {
                 //msg.sender.transfer(campaigns[_campaignID].totalAmountFunded);
                 campaigns[_campaignID].isCampaignOpen = false; //Close the campaign
     }
-
+     //function to process the tranfer of fund
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool success){
         //require(_value <= balances[_from]);
         //require(_value <= allowed[_from][msg.sender]);
@@ -184,7 +186,8 @@ contract CrowdFund {
            return campaigns[_campaignID].contributions[msg.sender];
 
     }
-
+    
+     //getting the details of a particular campaign using the campaignID
     function getCampaignDetails(uint256 _campaignID) public view returns (
     uint campaignID,
     string memory name,
@@ -215,7 +218,7 @@ contract CrowdFund {
    isCampaignOpen = _campaign.isCampaignOpen;
     }
 
-
+    //function to get the total number of campaigns
     function getTotalCampaigns() public view returns(uint256) {
     return totalCampaigns;
     }
